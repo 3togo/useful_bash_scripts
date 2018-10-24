@@ -1,0 +1,32 @@
+#! /bin/bash
+# Error constructing proxy for org.gnome.Terminal:/org/gnome/Terminal/Factory0:
+# Error calling StartServiceByName for org.gnome.Terminal: 
+# GDBus.Error:org.freedesktop.DBus.Error.Spawn.ChildExited: 
+# Process org.gnome.Terminal exited with status 1" .
+
+function touchChk()
+{
+FILEPATH=$(readlink -f $1)
+if [ ! -f $FILEPATH ]; then
+    # create the dir, then the file
+    DIR="`dirname -- "${FILEPATH}"`"
+    mkdir -p ${DIR} 
+    touch ${1}
+fi
+echo $FILEPATH
+}
+
+function appendOneLine()
+{
+FILE=$(touchChk $1)
+LINE=$2
+echo "line=$LINE"
+echo "file=$FILE"
+grep -qF -- "$LINE" ${FILE} || echo "$LINE" >> ${FILE}
+}
+
+appendOneLine ~/.xinitrc 'dbus-launch --exit-with-session gnome-session'
+appendOneLine ~/.xinitrc 'dbus-update-activation-environment --all'
+# appendOneLine ~/.xinitrc 'export NO_AT_BRIDGE=1'  #not a must
+
+
