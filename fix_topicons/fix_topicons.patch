@@ -1,0 +1,12 @@
+--- /home/eli/.local/share/gnome-shell/extensions/TopIcons@phocean.net/extension.js	2018-10-24 16:05:00.171639934 +0800
++++ /home/eli/.local/share/gnome-shell/extensions/TopIcons@phocean.net/extension.js.modified	2018-10-24 16:21:42.334276522 +0800
+@@ -178,7 +178,8 @@
+     tray = new Shell.TrayManager();
+     tray.connect('tray-icon-added', onTrayIconAdded);
+     tray.connect('tray-icon-removed', onTrayIconRemoved);
+-    tray.manage_screen(global.screen, Main.panel.actor);
++    //tray.manage_screen(global.screen, Main.panel.actor);
++    tray.manage_screen(Main.panel.actor);
+     placeTray();
+ }
+ 
